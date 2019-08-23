@@ -42,7 +42,8 @@
     "test": "cross-env NODE_ENV=test jest src --runInBand",
     "test:flow": "node scripts/patch-immutable-flow-error.js && opencollective-postinstall && flow check",
     "test:watch": "npm test -- --watch",
-    "test:cov": "npm run test -- --coverage"
+    "test:cov": "npm run test -- --coverage",
+    "deploy": "./scripts/deploy.sh"
   },
   "keywords": [
     "react",
@@ -157,8 +158,7 @@
   ],
   "lint-staged": {
     "*.{js,json,md,css}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "jest": {
