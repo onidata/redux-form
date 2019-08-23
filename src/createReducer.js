@@ -397,11 +397,10 @@ function createReducer<M, L>(structure: Structure<M, L>) {
     ) {
       const mapData = fromJS(payload)
       let result = empty // clean all field state
-      debugger
-      // persist invalid IDs
+
       const invalidIds = getIn(state, 'invalidIds')
       if (invalidIds) {
-        result = setIn(result, 'invalidIds', empty)
+        result = setIn(result, 'invalidIds', invalidIds)
       }
 
       // persist old warnings, they will get recalculated if the new form values are different from the old values
@@ -683,23 +682,33 @@ function createReducer<M, L>(structure: Structure<M, L>) {
         }
         let syncErrors = getIn(result, 'syncErrors')
         if (syncErrors) {
-          const invalidIds = getIn(state, 'invalidIds') || empty
-          debugger
-          syncErrors = plainDeleteInWithCleanUp(syncErrors, name)
-          if (plain.deepEqual(syncErrors, plain.empty)) {
-            result = deleteIn(result, 'syncErrors')
-            if (id) {
-              result = setIn(result, 'invalidIds', deleteIn(invalidIds, id))
-            }
-          } else {
-            result = setIn(result, 'syncErrors', syncErrors)
-            if (id) {
+          if (!getIn(result, 'invalidIds')) {
+            result = setIn(result, 'invalidIds', fromJS({}))
+          }
+          const invalidId = getIn(getIn(result, 'invalidIds'), id)
+          if (invalidId) {
+            const invalidIdSyncError = plainDeleteInWithCleanUp(invalidId, name)
+            debugger
+            if (plain.deepEqual(invalidIdSyncError, plain.empty)) {
               result = setIn(
                 result,
                 'invalidIds',
-                setIn(invalidIds, id, syncErrors)
+                deleteIn(getIn(result, 'invalidIds'), id)
+              )
+            } else {
+              result = setIn(
+                result,
+                'invalidIds',
+                setIn(getIn(result, 'invalidIds'), id, invalidIdSyncError)
               )
             }
+          }
+
+          syncErrors = plainDeleteInWithCleanUp(syncErrors, name)
+          if (plain.deepEqual(syncErrors, plain.empty)) {
+            result = deleteIn(result, 'syncErrors')
+          } else {
+            result = setIn(result, 'syncErrors', syncErrors)
           }
         }
         let syncWarnings = getIn(result, 'syncWarnings')
@@ -753,21 +762,27 @@ function createReducer<M, L>(structure: Structure<M, L>) {
         result = deleteIn(result, 'syncError')
       }
 
-      const invalidIds = getIn(state, 'invalidIds') || empty
-      debugger
+      if (!getIn(result, 'invalidIds')) {
+        result = setIn(result, 'invalidIds', fromJS({}))
+      }
+
       if (Object.keys(syncErrors).length) {
         result = setIn(result, 'syncErrors', syncErrors)
         if (id) {
           result = setIn(
             result,
             'invalidIds',
-            setIn(invalidIds, id, syncErrors)
+            setIn(getIn(result, 'invalidIds'), id, syncErrors)
           )
         }
       } else {
         result = deleteIn(result, 'syncErrors')
         if (id) {
-          result = setIn(result, 'invalidIds', deleteIn(invalidIds, id))
+          result = setIn(
+            result,
+            'invalidIds',
+            deleteIn(getIn(result, 'invalidIds'), id)
+          )
         }
       }
       return result
