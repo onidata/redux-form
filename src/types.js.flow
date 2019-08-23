@@ -31,6 +31,7 @@ export interface Structure<M, L> {
   splice(array: L, index: number, removeNum: number, value: any): L;
   equals(a: any, b: any): boolean;
   orderChanged(a: any, b: any): boolean;
+  mergeDeep(a: any, ...sources: any[]): any,
   toJS(value: M): any;
 }
 

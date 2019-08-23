@@ -5,6 +5,7 @@ import setIn from './setIn'
 import deepEqual from './deepEqual'
 import deleteIn from './deleteIn'
 import keys from './keys'
+import mergeDeep from './mergeDeep'
 import type { Structure } from '../../types'
 
 const structure: Structure<Object, Array<*>> = {
@@ -23,6 +24,7 @@ const structure: Structure<Object, Array<*>> = {
   splice,
   equals: (a, b) => b.every(val => ~a.indexOf(val)),
   orderChanged: (a, b) => b.some((val, index) => val !== a[index]),
+  mergeDeep,
   toJS: value => value
 }
 

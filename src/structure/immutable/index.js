@@ -6,6 +6,7 @@ import keys from './keys'
 import setIn from './setIn'
 import splice from './splice'
 import plainGetIn from '../plain/getIn'
+import plainMergeDeep from '../plain/mergeDeep'
 import type { Structure } from '../../types'
 import type { Map as ImmutableMap, List as ImmutableList } from 'immutable'
 
@@ -38,6 +39,10 @@ const structure: Structure<ImmutableMap<string, *>, ImmutableList<*>> = {
   splice,
   equals: (a, b) => (b.equals(a) ? true : b.toSet().equals(a.toSet())),
   orderChanged: (a, b) => b.some((val, index) => val !== a.get(index)),
+  mergeDeep: (target: any, ...sources: any[]) =>
+    Iterable.isIterable(target)
+      ? target.mergeDeep(sources[0])
+      : plainMergeDeep(target, sources),
   toJS: value => (Iterable.isIterable(value) ? value.toJS() : value)
 }
 

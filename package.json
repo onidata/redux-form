@@ -1,7 +1,7 @@
 {
   "name": "@onidata/redux-form",
-  "version": "8.2.6",
-  "description": "A higher order component decorator for forms using Redux and React - Ondiata Version",
+  "version": "1.0.0",
+  "description": "ReduxForm for Onidata",
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "modules.root": "./es",
@@ -9,7 +9,7 @@
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "git@github.com:onidata/redux-form.git"
+    "url": "git+ssh://git@github.com/onidata/redux-form.git"
   },
   "scripts": {
     "analyze": "webpack src/index.js dist/redux-form.js -p --bail --profile --json > stats.json && webpack-bundle-analyzer stats.json",

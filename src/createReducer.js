@@ -786,7 +786,10 @@ function createReducer<M, L>(structure: Structure<M, L>) {
         syncErrors = {}
         const invalidIds = getIn(result, 'invalidIds')
         forEach(keys(invalidIds), invalidId => {
-          syncErrors = Object.assign(syncErrors, getIn(invalidIds, invalidId))
+          syncErrors = plain.mergeDeep(
+            { ...getIn(invalidIds, invalidId) },
+            syncErrors
+          )
         })
       }
 
