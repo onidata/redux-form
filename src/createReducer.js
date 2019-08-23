@@ -680,15 +680,15 @@ function createReducer<M, L>(structure: Structure<M, L>) {
         if (deepEqual(getIn(result, 'registeredFields'), empty)) {
           result = deleteIn(result, 'registeredFields')
         }
-        let syncErrors = getIn(result, 'syncErrors')
-        if (syncErrors) {
+
+        if (id) {
           if (!getIn(result, 'invalidIds')) {
             result = setIn(result, 'invalidIds', fromJS({}))
           }
+
           const invalidId = getIn(getIn(result, 'invalidIds'), id)
           if (invalidId) {
             const invalidIdSyncError = plainDeleteInWithCleanUp(invalidId, name)
-            debugger
             if (plain.deepEqual(invalidIdSyncError, plain.empty)) {
               result = setIn(
                 result,
@@ -703,7 +703,10 @@ function createReducer<M, L>(structure: Structure<M, L>) {
               )
             }
           }
+        }
 
+        let syncErrors = getIn(result, 'syncErrors')
+        if (syncErrors) {
           syncErrors = plainDeleteInWithCleanUp(syncErrors, name)
           if (plain.deepEqual(syncErrors, plain.empty)) {
             result = deleteIn(result, 'syncErrors')
@@ -762,29 +765,37 @@ function createReducer<M, L>(structure: Structure<M, L>) {
         result = deleteIn(result, 'syncError')
       }
 
-      if (!getIn(result, 'invalidIds')) {
-        result = setIn(result, 'invalidIds', fromJS({}))
-      }
-
-      if (Object.keys(syncErrors).length) {
-        result = setIn(result, 'syncErrors', syncErrors)
-        if (id) {
+      if (id) {
+        if (!getIn(result, 'invalidIds')) {
+          result = setIn(result, 'invalidIds', fromJS({}))
+        }
+        if (Object.keys(syncErrors).length) {
           result = setIn(
             result,
             'invalidIds',
             setIn(getIn(result, 'invalidIds'), id, syncErrors)
           )
-        }
-      } else {
-        result = deleteIn(result, 'syncErrors')
-        if (id) {
+        } else {
           result = setIn(
             result,
             'invalidIds',
             deleteIn(getIn(result, 'invalidIds'), id)
           )
         }
+
+        syncErrors = {}
+        const invalidIds = getIn(result, 'invalidIds')
+        forEach(keys(invalidIds), invalidId => {
+          syncErrors = Object.assign(syncErrors, getIn(invalidIds, invalidId))
+        })
       }
+
+      if (Object.keys(syncErrors).length) {
+        result = setIn(result, 'syncErrors', syncErrors)
+      } else {
+        result = deleteIn(result, 'syncErrors')
+      }
+
       return result
     },
     [UPDATE_SYNC_WARNINGS](

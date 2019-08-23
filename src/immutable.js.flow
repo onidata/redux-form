@@ -168,7 +168,7 @@ declare export function getFormMeta(
   getFormState: ?GetFormState
 ): GetFormMetaInterface
 
-declare export function getInvalidIds(
+declare export function getFormInvalidIds(
   form: string,
   getFormState: ?GetFormState
 ): GetFormInvalidIdsInterface
