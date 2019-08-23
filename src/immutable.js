@@ -35,6 +35,7 @@ export {
 } from './immutable/getFormInitialValues'
 export { default as getFormSyncErrors } from './immutable/getFormSyncErrors'
 export { default as getFormMeta } from './immutable/getFormMeta'
+export { default as getFormInvalidIds } from './immutable/getFormInvalidIds'
 export { default as getFormAsyncErrors } from './immutable/getFormAsyncErrors'
 export { default as getFormSyncWarnings } from './immutable/getFormSyncWarnings'
 export { default as getFormSubmitErrors } from './immutable/getFormSubmitErrors'

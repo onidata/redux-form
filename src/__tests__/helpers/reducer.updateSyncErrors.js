@@ -12,7 +12,7 @@ const describeUpdateSyncErrors = (reducer, expect, { fromJS, setIn }) => () => {
           }
         }
       }),
-      updateSyncErrors('foo', {
+      updateSyncErrors('foo', null, {
         myField: 'myField error',
         myOtherField: 'myOtherField error'
       })
@@ -48,6 +48,7 @@ const describeUpdateSyncErrors = (reducer, expect, { fromJS, setIn }) => () => {
       }),
       updateSyncErrors(
         'foo',
+        null,
         {
           myField: 'myField error'
         },
@@ -84,7 +85,7 @@ const describeUpdateSyncErrors = (reducer, expect, { fromJS, setIn }) => () => {
           }
         }
       }),
-      updateSyncErrors('foo', {
+      updateSyncErrors('foo', null, {
         myField: { complex: true, text: 'myField error' },
         myOtherField: { complex: true, text: 'myOtherField error' }
       })
@@ -125,7 +126,7 @@ const describeUpdateSyncErrors = (reducer, expect, { fromJS, setIn }) => () => {
           myOtherField: 'myOtherField error'
         }
       ),
-      updateSyncErrors('foo', {})
+      updateSyncErrors('foo', null, {})
     )
     expect(state).toEqualMap({
       foo: {

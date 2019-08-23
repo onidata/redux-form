@@ -27,6 +27,7 @@ import type { GetFormValuesInterface } from './selectors/getFormValues.types'
 import type { GetFormInitialValuesInterface } from './selectors/getFormInitialValues.types'
 import type { GetFormSyncErrorsInterface } from './selectors/getFormSyncErrors.types'
 import type { GetFormMetaInterface } from './selectors/getFormMeta.types'
+import type { GetFormInvalidIdsInterface } from './selectors/getFormInvalidIds.types'
 import type { GetFormAsyncErrorsInterface } from './selectors/getFormAsyncErrors.types'
 import type { GetFormSyncWarningsInterface } from './selectors/getFormSyncWarnings.types'
 import type { GetFormSubmitErrorsInterface } from './selectors/getFormSubmitErrors.types'
@@ -165,6 +166,11 @@ declare export function getFormMeta(
   form: string,
   getFormState: ?GetFormState
 ): GetFormMetaInterface
+
+declare export function getInvalidIds(
+  form: string,
+  getFormState: ?GetFormState
+): GetFormInvalidIdsInterface
 
 declare export function getFormAsyncErrors(
   form: string,

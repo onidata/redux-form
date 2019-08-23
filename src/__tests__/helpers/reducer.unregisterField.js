@@ -9,7 +9,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
           registeredFields: { bar: { name: 'bar', type: 'field', count: 1 } }
         }
       }),
-      unregisterField('foo', 'bar')
+      unregisterField('foo', null, 'bar')
     )
     expect(state).toEqualMap({
       foo: {}
@@ -32,7 +32,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
             bar: 'Your bar needs more beer'
           }
         ),
-        unregisterField('foo', 'bar')
+        unregisterField('foo', null, 'bar')
       )
     ).toEqualMap({
       foo: {}
@@ -54,7 +54,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
             another: 'Another error'
           }
         ),
-        unregisterField('foo', 'bar')
+        unregisterField('foo', null, 'bar')
       )
     ).toEqualMap(
       setIn(
@@ -96,7 +96,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
           }
         }
       ),
-      unregisterField('foo', 'bar.deep.property')
+      unregisterField('foo', null, 'bar.deep.property')
     )
     expect(state).toEqualMap({
       foo: {}
@@ -126,7 +126,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
           }
         }
       ),
-      unregisterField('foo', 'bar.deep.property')
+      unregisterField('foo', null, 'bar.deep.property')
     )
     expect(state).toEqualMap({
       foo: {}
@@ -143,7 +143,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
           }
         }
       }),
-      unregisterField('foo', 'bar')
+      unregisterField('foo', null, 'bar')
     )
     expect(state).toEqualMap({
       foo: {
@@ -165,7 +165,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
           }
         }
       }),
-      unregisterField('foo', 'bar')
+      unregisterField('foo', null, 'bar')
     )
     expect(state).toEqualMap({
       foo: {}
@@ -182,7 +182,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
           }
         }
       }),
-      unregisterField('foo', 'bar')
+      unregisterField('foo', null, 'bar')
     )
     expect(state).toEqualMap({
       foo: {
@@ -204,7 +204,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
           }
         }
       }),
-      unregisterField('foo', 'bar')
+      unregisterField('foo', null, 'bar')
     )
     expect(state).toEqualMap({
       foo: {}
@@ -221,7 +221,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
           }
         }
       }),
-      unregisterField('foo', 'bar')
+      unregisterField('foo', null, 'bar')
     )
     expect(state).toEqualMap({
       foo: {
@@ -249,7 +249,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
             bar: 'Your bar needs more beer'
           }
         ),
-        unregisterField('foo', 'bar')
+        unregisterField('foo', null, 'bar')
       )
     ).toEqualMap({
       foo: {}
@@ -271,7 +271,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
             another: 'Another warning'
           }
         ),
-        unregisterField('foo', 'bar')
+        unregisterField('foo', null, 'bar')
       )
     ).toEqualMap(
       setIn(
@@ -300,7 +300,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
           }
         }
       }),
-      unregisterField('foo', 'bar')
+      unregisterField('foo', null, 'bar')
     )
     expect(state).toEqualMap({
       foo: {
@@ -316,7 +316,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
     const initialState = fromJS({
       foo: {}
     })
-    const state = reducer(initialState, unregisterField('foo', 'bar'))
+    const state = reducer(initialState, unregisterField('foo', null, 'bar'))
     expect(state).toEqual(initialState)
   })
 
@@ -329,7 +329,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
           }
         }
       }),
-      unregisterField('foo', 'baz')
+      unregisterField('foo', null, 'baz')
     )
     expect(state).toEqualMap({
       foo: {
@@ -345,7 +345,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
           registeredFields: { bar: { name: 'bar', type: 'field', count: 1 } }
         }
       }),
-      unregisterField('foo', 'bar', false)
+      unregisterField('foo', null, 'bar', false)
     )
     expect(state).toEqualMap({
       foo: {
@@ -361,7 +361,7 @@ const describeUnregisterField = (reducer, expect, { fromJS, setIn }) => () => {
           registeredFields: { bar: { name: 'bar', type: 'field', count: 8 } }
         }
       }),
-      unregisterField('foo', 'bar')
+      unregisterField('foo', null, 'bar')
     )
     expect(state).toEqualMap({
       foo: {

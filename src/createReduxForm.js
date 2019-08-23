@@ -59,6 +59,8 @@ const {
   blur,
   change,
   focus,
+  updateSyncErrors: updateSyncErrorsFormAction,
+  unregisterField: unregisterFieldFormAction,
   ...formActions
 } = importedActions
 
@@ -205,7 +207,8 @@ type OptionalConfig = {
   onSubmitSuccess?: OnSubmitSuccess,
   propNamespace?: string,
   validate?: ValidateFunction,
-  warn?: ValidateFunction
+  warn?: ValidateFunction,
+  id?: string
 }
 
 // the options that users pass in to the @reduxForm decorator, or other decorators created with createReduxForm()
@@ -1068,10 +1071,20 @@ const createReduxForm = (structure: Structure<*, *>) => {
         (dispatch, initialProps) => {
           const bindForm = actionCreator =>
             actionCreator.bind(null, initialProps.form)
+          const bindFormAndId = actionCreator =>
+            actionCreator.bind(null, initialProps.form, initialProps.id)
 
           // Bind the first parameter on `props.form`
           const boundFormACs = mapValues(formActions, bindForm)
+          const boundFormAndIdACs = mapValues(
+            {
+              updateSyncErrors: updateSyncErrorsFormAction,
+              unregisterField: unregisterFieldFormAction
+            },
+            bindFormAndId
+          )
           const boundArrayACs = mapValues(arrayActions, bindForm)
+
           const boundBlur = (field, value) =>
             blur(initialProps.form, field, value, !!initialProps.touchOnBlur)
           const boundChange = (field, value) =>
@@ -1085,7 +1098,10 @@ const createReduxForm = (structure: Structure<*, *>) => {
           const boundFocus = bindForm(focus)
 
           // Wrap action creators with `dispatch`
-          const connectedFormACs = bindActionCreators(boundFormACs, dispatch)
+          const connectedFormACs = bindActionCreators(
+            { ...boundFormACs, ...boundFormAndIdACs },
+            dispatch
+          )
           const connectedArrayACs = {
             insert: bindActionCreators(boundArrayACs.arrayInsert, dispatch),
             move: bindActionCreators(boundArrayACs.arrayMove, dispatch),

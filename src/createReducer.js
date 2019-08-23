@@ -397,6 +397,12 @@ function createReducer<M, L>(structure: Structure<M, L>) {
     ) {
       const mapData = fromJS(payload)
       let result = empty // clean all field state
+      debugger
+      // persist invalid IDs
+      const invalidIds = getIn(state, 'invalidIds')
+      if (invalidIds) {
+        result = setIn(result, 'invalidIds', empty)
+      }
 
       // persist old warnings, they will get recalculated if the new form values are different from the old values
       const warning = getIn(state, 'warning')
@@ -657,7 +663,8 @@ function createReducer<M, L>(structure: Structure<M, L>) {
     [UNREGISTER_FIELD](
       state,
       {
-        payload: { name, destroyOnUnmount }
+        payload: { name, destroyOnUnmount },
+        meta: { id }
       }
     ) {
       let result = state
@@ -676,11 +683,23 @@ function createReducer<M, L>(structure: Structure<M, L>) {
         }
         let syncErrors = getIn(result, 'syncErrors')
         if (syncErrors) {
+          const invalidIds = getIn(state, 'invalidIds') || empty
+          debugger
           syncErrors = plainDeleteInWithCleanUp(syncErrors, name)
           if (plain.deepEqual(syncErrors, plain.empty)) {
             result = deleteIn(result, 'syncErrors')
+            if (id) {
+              result = setIn(result, 'invalidIds', deleteIn(invalidIds, id))
+            }
           } else {
             result = setIn(result, 'syncErrors', syncErrors)
+            if (id) {
+              result = setIn(
+                result,
+                'invalidIds',
+                setIn(invalidIds, id, syncErrors)
+              )
+            }
           }
         }
         let syncWarnings = getIn(result, 'syncWarnings')
@@ -721,7 +740,8 @@ function createReducer<M, L>(structure: Structure<M, L>) {
     [UPDATE_SYNC_ERRORS](
       state,
       {
-        payload: { syncErrors, error }
+        payload: { syncErrors, error },
+        meta: { id }
       }
     ) {
       let result = state
@@ -732,10 +752,23 @@ function createReducer<M, L>(structure: Structure<M, L>) {
         result = deleteIn(result, 'error')
         result = deleteIn(result, 'syncError')
       }
+
+      const invalidIds = getIn(state, 'invalidIds') || empty
+      debugger
       if (Object.keys(syncErrors).length) {
         result = setIn(result, 'syncErrors', syncErrors)
+        if (id) {
+          result = setIn(
+            result,
+            'invalidIds',
+            setIn(invalidIds, id, syncErrors)
+          )
+        }
       } else {
         result = deleteIn(result, 'syncErrors')
+        if (id) {
+          result = setIn(result, 'invalidIds', deleteIn(invalidIds, id))
+        }
       }
       return result
     },

@@ -389,11 +389,12 @@ const touch: Touch = (form: string, ...fields: string[]): TouchAction => ({
 
 const unregisterField: UnregisterField = (
   form: string,
+  id: string,
   name: string,
   destroyOnUnmount: boolean = true
 ): UnregisterFieldAction => ({
   type: UNREGISTER_FIELD,
-  meta: { form },
+  meta: { form, id },
   payload: { name, destroyOnUnmount }
 })
 
@@ -407,11 +408,12 @@ const untouch: Untouch = (
 
 const updateSyncErrors: UpdateSyncErrors = (
   form: string,
+  id: string,
   syncErrors: Object = {},
   error: any
 ): UpdateSyncErrorsAction => ({
   type: UPDATE_SYNC_ERRORS,
-  meta: { form },
+  meta: { form, id },
   payload: { syncErrors, error }
 })
 

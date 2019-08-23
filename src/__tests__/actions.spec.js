@@ -685,11 +685,12 @@ describe('actions', () => {
   })
 
   it('should create unregisterField action', () => {
-    expect(unregisterField('myForm', 'foo')).toEqual({
+    expect(unregisterField('myForm', 'myId', 'foo')).toEqual({
       type: UNREGISTER_FIELD,
 
       meta: {
-        form: 'myForm'
+        form: 'myForm',
+        id: 'myId'
       },
 
       payload: {
@@ -698,7 +699,7 @@ describe('actions', () => {
       }
     })
 
-    expect(isFSA(unregisterField('myForm', 'foo'))).toBe(true)
+    expect(isFSA(unregisterField('myForm', 'myId', 'foo'))).toBe(true)
   })
 
   it('should create untouch action', () => {
@@ -726,11 +727,12 @@ describe('actions', () => {
   })
 
   it('should create updateSyncErrors action', () => {
-    expect(updateSyncErrors('myForm', { foo: 'foo error' })).toEqual({
+    expect(updateSyncErrors('myForm', 'myId', { foo: 'foo error' })).toEqual({
       type: UPDATE_SYNC_ERRORS,
 
       meta: {
-        form: 'myForm'
+        form: 'myForm',
+        id: 'myId'
       },
 
       payload: {
@@ -742,15 +744,18 @@ describe('actions', () => {
       }
     })
 
-    expect(isFSA(updateSyncErrors('myForm', { foo: 'foo error' }))).toBe(true)
+    expect(
+      isFSA(updateSyncErrors('myForm', 'myId', { foo: 'foo error' }))
+    ).toBe(true)
   })
 
   it('should create updateSyncErrors action with no errors if none given', () => {
-    expect(updateSyncErrors('myForm')).toEqual({
+    expect(updateSyncErrors('myForm', 'myId')).toEqual({
       type: UPDATE_SYNC_ERRORS,
 
       meta: {
-        form: 'myForm'
+        form: 'myForm',
+        id: 'myId'
       },
 
       payload: {
@@ -759,7 +764,7 @@ describe('actions', () => {
       }
     })
 
-    expect(isFSA(updateSyncErrors('myForm'))).toBe(true)
+    expect(isFSA(updateSyncErrors('myForm', 'myId'))).toBe(true)
   })
 
   it('should create updateSyncWarnings action', () => {

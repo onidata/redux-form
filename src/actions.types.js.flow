@@ -246,11 +246,11 @@ export type TouchAction = {
 export type Touch = { (form: string, ...fields: string[]): TouchAction }
 export type UnregisterFieldAction = {
   type: string,
-  meta: { form: string },
+  meta: { form: string, id: string },
   payload: { name: string, destroyOnUnmount: boolean }
 } & Action
 export type UnregisterField = {
-  (form: string, name: string, destroyOnUnmount: boolean): UnregisterFieldAction
+  (form: string, id: string, name: string, destroyOnUnmount: boolean): UnregisterFieldAction
 }
 export type UntouchAction = {
   type: string,
@@ -259,11 +259,11 @@ export type UntouchAction = {
 export type Untouch = { (form: string, ...fields: string[]): UntouchAction }
 export type UpdateSyncErrorsAction = {
   type: string,
-  meta: { form: string },
+  meta: { form: string, id: string },
   payload: { syncErrors: Object, error: any }
 } & Action
 export type UpdateSyncErrors = {
-  (form: string, syncErrors: Object, error: any): UpdateSyncErrorsAction
+  (form: string, id: string, syncErrors: Object, error: any): UpdateSyncErrorsAction
 }
 export type UpdateSyncWarningsAction = {
   type: string,

@@ -5599,7 +5599,7 @@ const describeReduxForm = (name, structure, combineReducers, setup) => {
 
       // check that updateSyncErrors action was dispatched
       expect(logger.mock.calls[callIndex++][1]).toEqual(
-        updateSyncErrors('testForm', {})
+        updateSyncErrors('testForm', undefined, {})
       )
 
       // rerendered once to flip dirty flag, and again to flip invalid flag
@@ -5717,7 +5717,7 @@ const describeReduxForm = (name, structure, combineReducers, setup) => {
 
       // check that updateSyncErrors action was dispatched
       expect(logger.mock.calls[callIndex++][1]).toEqual(
-        updateSyncErrors('testForm', {})
+        updateSyncErrors('testForm', undefined, {})
       )
 
       // rerendered once to flip dirty flag, and again to flip invalid flag
