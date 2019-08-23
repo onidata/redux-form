@@ -1,6 +1,6 @@
 // @flow
 
-const isObject = (item: any): Boolean => {
+const isObject = (item: any): boolean => {
   return item && typeof item === 'object' && !Array.isArray(item)
 }
 
