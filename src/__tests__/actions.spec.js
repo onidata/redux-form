@@ -439,12 +439,13 @@ describe('actions', () => {
     expect(isFSA(initialize('myForm', data, true))).toBe(true)
   })
 
-  it('should create registerField action', () => {
-    expect(registerField('myForm', 'foo', 'Field')).toEqual({
+  it('should create registerField action without id', () => {
+    expect(registerField('myForm', undefined, 'foo', 'Field')).toEqual({
       type: REGISTER_FIELD,
 
       meta: {
-        form: 'myForm'
+        form: 'myForm',
+        id: undefined
       },
 
       payload: {
@@ -453,7 +454,25 @@ describe('actions', () => {
       }
     })
 
-    expect(isFSA(registerField('myForm', 'foo', 'Field'))).toBe(true)
+    expect(isFSA(registerField('myForm', undefined, 'foo', 'Field'))).toBe(true)
+  })
+
+  it('should create registerField action', () => {
+    expect(registerField('myForm', 'myId', 'foo', 'Field')).toEqual({
+      type: REGISTER_FIELD,
+
+      meta: {
+        form: 'myForm',
+        id: 'myId'
+      },
+
+      payload: {
+        name: 'foo',
+        type: 'Field'
+      }
+    })
+
+    expect(isFSA(registerField('myForm', 'myId', 'foo', 'Field'))).toBe(true)
   })
 
   it('should create reset action', () => {
@@ -517,27 +536,37 @@ describe('actions', () => {
   })
 
   it('should create startSubmit action', () => {
-    expect(startSubmit('myForm')).toEqual({
+    expect(startSubmit('myForm', { bar: {} })).toEqual({
       type: START_SUBMIT,
 
       meta: {
         form: 'myForm'
+      },
+
+      payload: {
+        registeredFields: {
+          bar: {},
+        }
       }
     })
 
-    expect(isFSA(startSubmit('myForm'))).toBe(true)
+    expect(isFSA(startSubmit('myForm', { bar: {} }))).toBe(true)
   })
 
   it('should create startSubmit action', () => {
-    expect(startSubmit('myForm')).toEqual({
+    expect(startSubmit('myForm', {})).toEqual({
       type: START_SUBMIT,
 
       meta: {
         form: 'myForm'
+      },
+
+      payload: {
+        registeredFields: {},
       }
     })
 
-    expect(isFSA(startSubmit('myForm'))).toBe(true)
+    expect(isFSA(startSubmit('myForm', {}))).toBe(true)
   })
 
   it('should create stopAsyncValidation action', () => {

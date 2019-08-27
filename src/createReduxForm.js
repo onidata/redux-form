@@ -61,6 +61,7 @@ const {
   focus,
   updateSyncErrors: updateSyncErrorsFormAction,
   unregisterField: unregisterFieldFormAction,
+  registerField: registerFieldFormAction,
   ...formActions
 } = importedActions
 
@@ -97,6 +98,12 @@ const checkSubmit = submit => {
   return submit
 }
 
+type RegisteredField = {
+  name: string,
+  id?: string,
+  type: FieldType,
+  count: number
+}
 type OnSubmitFail = (
   errors: ?Object,
   dispatch: Dispatch<*>,
@@ -142,7 +149,7 @@ type SetSubmitSucceededAction = (...fields: string[]) => void
 type StartAsyncValidationAction = (field: string) => void
 type StopAsyncValidationAction = (errors: ?Object) => void
 type StopSubmitAction = (errors: ?Object) => void
-type StartSubmitAction = () => void
+type StartSubmitAction = (registeredFields: Array<RegisteredField>) => void
 type TouchAction = (...fields: string[]) => void
 type UntouchAction = (...fields: string[]) => void
 type UpdateSyncErrorsAction = (syncErrors: ?Object, error: ?any) => void
@@ -255,7 +262,7 @@ export type Props = RequiredConfig &
     pristine: boolean,
     propNamespace?: string,
     pure?: boolean,
-    registeredFields: Array<{ name: string, type: FieldType, count: number }>,
+    registeredFields: Array<RegisteredField>,
     registerField: RegisterFieldAction,
     reset: ResetAction,
     resetSection: ResetSectionAction,
@@ -1079,7 +1086,8 @@ const createReduxForm = (structure: Structure<*, *>) => {
           const boundFormAndIdACs = mapValues(
             {
               updateSyncErrors: updateSyncErrorsFormAction,
-              unregisterField: unregisterFieldFormAction
+              unregisterField: unregisterFieldFormAction,
+              registerField: registerFieldFormAction
             },
             bindFormAndId
           )

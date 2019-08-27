@@ -513,6 +513,7 @@ function createReducer<M, L>(structure: Structure<M, L>) {
     [REGISTER_FIELD](
       state,
       {
+        meta: { id },
         payload: { name, type }
       }
     ) {
@@ -522,7 +523,11 @@ function createReducer<M, L>(structure: Structure<M, L>) {
         const count = getIn(field, 'count') + 1
         field = setIn(field, 'count', count)
       } else {
-        field = fromJS({ name, type, count: 1 })
+        if (id) {
+          field = fromJS({ name, type, id, count: 1 })
+        } else {
+          field = fromJS({ name, type, count: 1 })
+        }
       }
       return setIn(state, key, field)
     },

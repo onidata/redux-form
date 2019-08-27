@@ -7,7 +7,7 @@ const describeRegisterField = (reducer, expect, { fromJS }) => () => {
       fromJS({
         foo: {}
       }),
-      registerField('foo', 'bar', 'Field')
+      registerField('foo', null, 'bar', 'Field')
     )
     expect(state).toEqualMap({
       foo: {
@@ -25,13 +25,13 @@ const describeRegisterField = (reducer, expect, { fromJS }) => () => {
           }
         }
       }),
-      registerField('foo', 'bar', 'Field')
+      registerField('foo', 'myId', 'bar', 'Field')
     )
     expect(state).toEqualMap({
       foo: {
         registeredFields: {
           baz: { name: 'baz', type: 'FieldArray', count: 1 },
-          bar: { name: 'bar', type: 'Field', count: 1 }
+          bar: { name: 'bar', id:'myId', type: 'Field', count: 1 }
         }
       }
     })
@@ -40,14 +40,14 @@ const describeRegisterField = (reducer, expect, { fromJS }) => () => {
   it('should increase count if the field already exists', () => {
     const initialState = fromJS({
       foo: {
-        registeredFields: { bar: { name: 'bar', type: 'Field', count: 1 } }
+        registeredFields: { bar: { name: 'bar', id:'myId', type: 'Field', count: 1 } }
       }
     })
-    const state = reducer(initialState, registerField('foo', 'bar', 'Field'))
+    const state = reducer(initialState, registerField('foo', 'myId', 'bar', 'Field'))
     expect(state).toEqualMap({
       foo: {
         registeredFields: {
-          bar: { name: 'bar', type: 'Field', count: 2 }
+          bar: { name: 'bar', id:'myId', type: 'Field', count: 2 }
         }
       }
     })
