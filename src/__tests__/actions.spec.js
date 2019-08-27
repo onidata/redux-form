@@ -545,7 +545,7 @@ describe('actions', () => {
 
       payload: {
         registeredFields: {
-          bar: {},
+          bar: {}
         }
       }
     })
@@ -562,7 +562,7 @@ describe('actions', () => {
       },
 
       payload: {
-        registeredFields: {},
+        registeredFields: {}
       }
     })
 

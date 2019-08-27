@@ -335,7 +335,10 @@ const startAsyncValidation: StartAsyncValidation = (
   meta: { form, field }
 })
 
-const startSubmit: StartSubmit = (form: string, registeredFields: Object): StartSubmitAction => ({
+const startSubmit: StartSubmit = (
+  form: string,
+  registeredFields: Object
+): StartSubmitAction => ({
   type: START_SUBMIT,
   meta: { form },
   payload: { registeredFields }
