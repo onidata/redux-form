@@ -21,10 +21,15 @@ class Form extends Component<PropsWithContext> {
     }
   }
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     this.props._reduxForm.registerInnerOnSubmit(this.props.onSubmit)
   }
 
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.onSubmit !== prevProps.onSubmit) {
+      this.props._reduxForm.registerInnerOnSubmit(this.props.onSubmit)
+    }
+  }
   render() {
     const { _reduxForm, ...rest } = this.props
     return <form {...rest} />
