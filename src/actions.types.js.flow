@@ -178,11 +178,11 @@ export type Initialize = {
 }
 export type RegisterFieldAction = {
   type: string,
-  meta: { form: string },
+  meta: { form: string, id?: string },
   payload: { name: string, type: FieldType }
 } & Action
 export type RegisterField = {
-  (form: string, name: string, type: FieldType): RegisterFieldAction
+  (form: string, id?: string, name: string, type: FieldType): RegisterFieldAction
 }
 export type ResetAction = { type: string, meta: { form: string } } & Action
 export type Reset = { (form: string): ResetAction }
@@ -202,9 +202,10 @@ export type StartAsyncValidation = {
 }
 export type StartSubmitAction = {
   type: string,
-  meta: { form: string }
+  meta: { form: string },
+  payload: { registeredFields: Object }
 } & Action
-export type StartSubmit = { (form: string): StartSubmitAction }
+export type StartSubmit = { (form: string, registeredFields: Object): StartSubmitAction }
 export type StopAsyncValidationAction = {
   type: string,
   meta: { form: string },

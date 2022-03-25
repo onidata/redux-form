@@ -41,7 +41,8 @@ const executeSubmit = (
     stopSubmit,
     setSubmitFailed,
     setSubmitSucceeded,
-    values
+    values,
+    registeredFields
   } = props
 
   fields = makeFieldsArray(fields)
@@ -71,7 +72,7 @@ const executeSubmit = (
     }
   } else {
     if (isPromise(result)) {
-      startSubmit()
+      startSubmit(registeredFields)
       return result.then(
         submitResult => {
           stopSubmit()

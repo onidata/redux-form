@@ -305,11 +305,12 @@ const initialize: Initialize = (
 
 const registerField: RegisterField = (
   form: string,
+  id?: string,
   name: string,
   type: FieldType
 ): RegisterFieldAction => ({
   type: REGISTER_FIELD,
-  meta: { form },
+  meta: { form, id },
   payload: { name, type }
 })
 
@@ -334,9 +335,13 @@ const startAsyncValidation: StartAsyncValidation = (
   meta: { form, field }
 })
 
-const startSubmit: StartSubmit = (form: string): StartSubmitAction => ({
+const startSubmit: StartSubmit = (
+  form: string,
+  registeredFields: Object
+): StartSubmitAction => ({
   type: START_SUBMIT,
-  meta: { form }
+  meta: { form },
+  payload: { registeredFields }
 })
 
 const stopAsyncValidation: StopAsyncValidation = (
