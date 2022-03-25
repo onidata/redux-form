@@ -1,5 +1,5 @@
 var getDisplayName = function getDisplayName(Comp) {
-  return Comp.displayName || Comp.name || 'Component'
-}
+  return Comp.displayName || Comp.name || 'Component';
+};
 
-export default getDisplayName
+export default getDisplayName;

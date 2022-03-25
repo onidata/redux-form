@@ -1,41 +1,32 @@
 var getErrorKeys = function getErrorKeys(name, type) {
   switch (type) {
     case 'Field':
-      return [name, name + '._error']
+      return [name, name + "._error"];
 
     case 'FieldArray':
-      return [name + '._error']
+      return [name + "._error"];
 
     default:
-      throw new Error('Unknown field type')
+      throw new Error('Unknown field type');
   }
-}
+};
 
 var createHasError = function createHasError(_ref) {
-  var getIn = _ref.getIn
+  var getIn = _ref.getIn;
 
-  var hasError = function hasError(
-    field,
-    syncErrors,
-    asyncErrors,
-    submitErrors
-  ) {
+  var hasError = function hasError(field, syncErrors, asyncErrors, submitErrors) {
     if (!syncErrors && !asyncErrors && !submitErrors) {
-      return false
+      return false;
     }
 
-    var name = getIn(field, 'name')
-    var type = getIn(field, 'type')
-    return getErrorKeys(name, type).some(function(key) {
-      return (
-        getIn(syncErrors, key) ||
-        getIn(asyncErrors, key) ||
-        getIn(submitErrors, key)
-      )
-    })
-  }
+    var name = getIn(field, 'name');
+    var type = getIn(field, 'type');
+    return getErrorKeys(name, type).some(function (key) {
+      return getIn(syncErrors, key) || getIn(asyncErrors, key) || getIn(submitErrors, key);
+    });
+  };
 
-  return hasError
-}
+  return hasError;
+};
 
-export default createHasError
+export default createHasError;

@@ -1,25 +1,25 @@
-import _toPath from 'lodash/toPath'
+import _toPath from "lodash/toPath";
 
 var getIn = function getIn(state, field) {
   if (!state) {
-    return state
+    return state;
   }
 
-  var path = _toPath(field)
+  var path = _toPath(field);
 
-  var length = path.length
+  var length = path.length;
 
   if (!length) {
-    return undefined
+    return undefined;
   }
 
-  var result = state
+  var result = state;
 
   for (var i = 0; i < length && result; ++i) {
-    result = result[path[i]]
+    result = result[path[i]];
   }
 
-  return result
-}
+  return result;
+};
 
-export default getIn
+export default getIn;

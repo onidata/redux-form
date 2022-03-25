@@ -1,123 +1,92 @@
-import _objectWithoutPropertiesLoose from '@babel/runtime/helpers/objectWithoutPropertiesLoose'
-import _extends from '@babel/runtime/helpers/extends'
+import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/objectWithoutPropertiesLoose";
+import _extends from "@babel/runtime/helpers/extends";
 
 var processProps = function processProps(type, props, _value, deepEqual) {
-  var value = props.value
+  var value = props.value;
 
   if (type === 'checkbox') {
     return _extends({}, props, {
       checked: !!value
-    })
+    });
   }
 
   if (type === 'radio') {
     return _extends({}, props, {
       checked: deepEqual(value, _value),
       value: _value
-    })
+    });
   }
 
   if (type === 'select-multiple') {
     return _extends({}, props, {
       value: value || []
-    })
+    });
   }
 
   if (type === 'file') {
     return _extends({}, props, {
       value: value || undefined
-    })
+    });
   }
 
-  return props
-}
+  return props;
+};
 
 var createFieldProps = function createFieldProps(_ref, name, _ref2) {
   var getIn = _ref.getIn,
-    toJS = _ref.toJS,
-    deepEqual = _ref.deepEqual
+      toJS = _ref.toJS,
+      deepEqual = _ref.deepEqual;
 
   var asyncError = _ref2.asyncError,
-    asyncValidating = _ref2.asyncValidating,
-    onBlur = _ref2.onBlur,
-    onChange = _ref2.onChange,
-    onDrop = _ref2.onDrop,
-    onDragStart = _ref2.onDragStart,
-    dirty = _ref2.dirty,
-    dispatch = _ref2.dispatch,
-    onFocus = _ref2.onFocus,
-    form = _ref2.form,
-    format = _ref2.format,
-    initial = _ref2.initial,
-    parse = _ref2.parse,
-    pristine = _ref2.pristine,
-    props = _ref2.props,
-    state = _ref2.state,
-    submitError = _ref2.submitError,
-    submitFailed = _ref2.submitFailed,
-    submitting = _ref2.submitting,
-    syncError = _ref2.syncError,
-    syncWarning = _ref2.syncWarning,
-    validate = _ref2.validate,
-    value = _ref2.value,
-    _value = _ref2._value,
-    warn = _ref2.warn,
-    custom = _objectWithoutPropertiesLoose(_ref2, [
-      'asyncError',
-      'asyncValidating',
-      'onBlur',
-      'onChange',
-      'onDrop',
-      'onDragStart',
-      'dirty',
-      'dispatch',
-      'onFocus',
-      'form',
-      'format',
-      'initial',
-      'parse',
-      'pristine',
-      'props',
-      'state',
-      'submitError',
-      'submitFailed',
-      'submitting',
-      'syncError',
-      'syncWarning',
-      'validate',
-      'value',
-      '_value',
-      'warn'
-    ])
+      asyncValidating = _ref2.asyncValidating,
+      onBlur = _ref2.onBlur,
+      onChange = _ref2.onChange,
+      onDrop = _ref2.onDrop,
+      onDragStart = _ref2.onDragStart,
+      dirty = _ref2.dirty,
+      dispatch = _ref2.dispatch,
+      onFocus = _ref2.onFocus,
+      form = _ref2.form,
+      format = _ref2.format,
+      initial = _ref2.initial,
+      parse = _ref2.parse,
+      pristine = _ref2.pristine,
+      props = _ref2.props,
+      state = _ref2.state,
+      submitError = _ref2.submitError,
+      submitFailed = _ref2.submitFailed,
+      submitting = _ref2.submitting,
+      syncError = _ref2.syncError,
+      syncWarning = _ref2.syncWarning,
+      validate = _ref2.validate,
+      value = _ref2.value,
+      _value = _ref2._value,
+      warn = _ref2.warn,
+      custom = _objectWithoutPropertiesLoose(_ref2, ["asyncError", "asyncValidating", "onBlur", "onChange", "onDrop", "onDragStart", "dirty", "dispatch", "onFocus", "form", "format", "initial", "parse", "pristine", "props", "state", "submitError", "submitFailed", "submitting", "syncError", "syncWarning", "validate", "value", "_value", "warn"]);
 
-  var error = syncError || asyncError || submitError
-  var warning = syncWarning
+  var error = syncError || asyncError || submitError;
+  var warning = syncWarning;
 
   var formatFieldValue = function formatFieldValue(value, format) {
     if (format === null) {
-      return value
+      return value;
     }
 
-    var defaultFormattedValue = value == null ? '' : value
-    return format ? format(value, name) : defaultFormattedValue
-  }
+    var defaultFormattedValue = value == null ? '' : value;
+    return format ? format(value, name) : defaultFormattedValue;
+  };
 
-  var formattedFieldValue = formatFieldValue(value, format)
+  var formattedFieldValue = formatFieldValue(value, format);
   return {
-    input: processProps(
-      custom.type,
-      {
-        name: name,
-        onBlur: onBlur,
-        onChange: onChange,
-        onDragStart: onDragStart,
-        onDrop: onDrop,
-        onFocus: onFocus,
-        value: formattedFieldValue
-      },
-      _value,
-      deepEqual
-    ),
+    input: processProps(custom.type, {
+      name: name,
+      onBlur: onBlur,
+      onChange: onChange,
+      onDragStart: onDragStart,
+      onDrop: onDrop,
+      onFocus: onFocus,
+      value: formattedFieldValue
+    }, _value, deepEqual),
     meta: _extends({}, toJS(state), {
       active: !!(state && getIn(state, 'active')),
       asyncValidating: asyncValidating,
@@ -137,7 +106,7 @@ var createFieldProps = function createFieldProps(_ref, name, _ref2) {
       visited: !!(state && getIn(state, 'visited'))
     }),
     custom: _extends({}, custom, props)
-  }
-}
+  };
+};
 
-export default createFieldProps
+export default createFieldProps;

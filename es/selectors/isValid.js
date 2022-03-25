@@ -1,66 +1,55 @@
-import createHasError from '../hasError'
+import createHasError from '../hasError';
 
 var createIsValid = function createIsValid(structure) {
   var getIn = structure.getIn,
-    keys = structure.keys
-  var hasError = createHasError(structure)
-  return function(form, getFormState, ignoreSubmitErrors) {
+      keys = structure.keys;
+  var hasError = createHasError(structure);
+  return function (form, getFormState, ignoreSubmitErrors) {
     if (ignoreSubmitErrors === void 0) {
-      ignoreSubmitErrors = false
+      ignoreSubmitErrors = false;
     }
 
-    return function(state) {
-      var nonNullGetFormState =
-        getFormState ||
-        function(state) {
-          return getIn(state, 'form')
-        }
+    return function (state) {
+      var nonNullGetFormState = getFormState || function (state) {
+        return getIn(state, 'form');
+      };
 
-      var formState = nonNullGetFormState(state)
-      var syncError = getIn(formState, form + '.syncError')
+      var formState = nonNullGetFormState(state);
+      var syncError = getIn(formState, form + ".syncError");
 
       if (syncError) {
-        return false
+        return false;
       }
 
       if (!ignoreSubmitErrors) {
-        var error = getIn(formState, form + '.error')
+        var error = getIn(formState, form + ".error");
 
         if (error) {
-          return false
+          return false;
         }
       }
 
-      var syncErrors = getIn(formState, form + '.syncErrors')
-      var asyncErrors = getIn(formState, form + '.asyncErrors')
-      var submitErrors = ignoreSubmitErrors
-        ? undefined
-        : getIn(formState, form + '.submitErrors')
+      var syncErrors = getIn(formState, form + ".syncErrors");
+      var asyncErrors = getIn(formState, form + ".asyncErrors");
+      var submitErrors = ignoreSubmitErrors ? undefined : getIn(formState, form + ".submitErrors");
 
       if (!syncErrors && !asyncErrors && !submitErrors) {
-        return true
+        return true;
       }
 
-      var registeredFields = getIn(formState, form + '.registeredFields')
+      var registeredFields = getIn(formState, form + ".registeredFields");
 
       if (!registeredFields) {
-        return true
+        return true;
       }
 
-      return !keys(registeredFields)
-        .filter(function(name) {
-          return getIn(registeredFields, "['" + name + "'].count") > 0
-        })
-        .some(function(name) {
-          return hasError(
-            getIn(registeredFields, "['" + name + "']"),
-            syncErrors,
-            asyncErrors,
-            submitErrors
-          )
-        })
-    }
-  }
-}
+      return !keys(registeredFields).filter(function (name) {
+        return getIn(registeredFields, "['" + name + "'].count") > 0;
+      }).some(function (name) {
+        return hasError(getIn(registeredFields, "['" + name + "']"), syncErrors, asyncErrors, submitErrors);
+      });
+    };
+  };
+};
 
-export default createIsValid
+export default createIsValid;

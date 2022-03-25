@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 var any = PropTypes.any,
-  bool = PropTypes.bool,
-  func = PropTypes.func,
-  shape = PropTypes.shape,
-  string = PropTypes.string,
-  oneOfType = PropTypes.oneOfType,
-  object = PropTypes.object,
-  number = PropTypes.number
+    bool = PropTypes.bool,
+    func = PropTypes.func,
+    shape = PropTypes.shape,
+    string = PropTypes.string,
+    oneOfType = PropTypes.oneOfType,
+    object = PropTypes.object,
+    number = PropTypes.number;
 export var formPropTypes = {
   // State:
   anyTouched: bool.isRequired,
@@ -62,6 +62,7 @@ export var formPropTypes = {
     swap: func.isRequired,
     // function to swap values in an array field
     unshift: func.isRequired // function to unshift a value into an array field
+
   }),
   asyncValidate: func.isRequired,
   // function to trigger async validation
@@ -99,7 +100,8 @@ export var formPropTypes = {
   triggerSubmit: bool,
   // if true, submits the form on componentWillReceiveProps
   clearSubmit: func.isRequired // called before a triggered submit, by default clears triggerSubmit
-}
+
+};
 export var fieldInputPropTypes = {
   checked: bool,
   name: string.isRequired,
@@ -109,7 +111,7 @@ export var fieldInputPropTypes = {
   onDrop: func.isRequired,
   onFocus: func.isRequired,
   value: any
-}
+};
 export var fieldMetaPropTypes = {
   active: bool.isRequired,
   asyncValidating: bool.isRequired,
@@ -126,7 +128,7 @@ export var fieldMetaPropTypes = {
   valid: bool.isRequired,
   visited: bool.isRequired,
   warning: string
-}
+};
 export var fieldArrayMetaPropTypes = {
   dirty: bool.isRequired,
   error: any,
@@ -137,7 +139,7 @@ export var fieldArrayMetaPropTypes = {
   submitting: bool,
   valid: bool.isRequired,
   warning: string
-}
+};
 export var fieldArrayFieldsPropTypes = {
   name: string.isRequired,
   forEach: func.isRequired,
@@ -155,13 +157,13 @@ export var fieldArrayFieldsPropTypes = {
   shift: func.isRequired,
   swap: func.isRequired,
   unshift: func.isRequired
-}
+};
 export var fieldPropTypes = {
   input: shape(fieldInputPropTypes).isRequired,
   meta: shape(fieldMetaPropTypes).isRequired
-}
+};
 export var fieldArrayPropTypes = {
   fields: shape(fieldArrayFieldsPropTypes).isRequired,
   meta: shape(fieldArrayMetaPropTypes).isRequired
-}
-export default formPropTypes
+};
+export default formPropTypes;

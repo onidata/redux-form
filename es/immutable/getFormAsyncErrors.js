@@ -1,3 +1,3 @@
-import createGetFormAsyncErrors from '../selectors/getFormAsyncErrors'
-import immutable from '../structure/immutable'
-export default createGetFormAsyncErrors(immutable)
+import createGetFormAsyncErrors from '../selectors/getFormAsyncErrors';
+import immutable from '../structure/immutable';
+export default createGetFormAsyncErrors(immutable);

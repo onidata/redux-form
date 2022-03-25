@@ -1,57 +1,57 @@
-import _toPath from 'lodash/toPath'
+import _toPath from "lodash/toPath";
 
 function createDeleteInWithCleanUp(structure) {
   var shouldDeleteDefault = function shouldDeleteDefault(structure) {
-    return function(state, path) {
-      return structure.getIn(state, path) !== undefined
-    }
-  }
+    return function (state, path) {
+      return structure.getIn(state, path) !== undefined;
+    };
+  };
 
   var deepEqual = structure.deepEqual,
-    empty = structure.empty,
-    getIn = structure.getIn,
-    deleteIn = structure.deleteIn,
-    setIn = structure.setIn
-  return function(shouldDelete) {
+      empty = structure.empty,
+      getIn = structure.getIn,
+      deleteIn = structure.deleteIn,
+      setIn = structure.setIn;
+  return function (shouldDelete) {
     if (shouldDelete === void 0) {
-      shouldDelete = shouldDeleteDefault
+      shouldDelete = shouldDeleteDefault;
     }
 
     var deleteInWithCleanUp = function deleteInWithCleanUp(state, path) {
       if (path[path.length - 1] === ']') {
         // array path
-        var pathTokens = _toPath(path)
+        var pathTokens = _toPath(path);
 
-        pathTokens.pop()
-        var parent = getIn(state, pathTokens.join('.'))
-        return parent ? setIn(state, path) : state
+        pathTokens.pop();
+        var parent = getIn(state, pathTokens.join('.'));
+        return parent ? setIn(state, path) : state;
       }
 
-      var result = state
+      var result = state;
 
       if (shouldDelete(structure)(state, path)) {
-        result = deleteIn(state, path)
+        result = deleteIn(state, path);
       }
 
-      var dotIndex = path.lastIndexOf('.')
+      var dotIndex = path.lastIndexOf('.');
 
       if (dotIndex > 0) {
-        var parentPath = path.substring(0, dotIndex)
+        var parentPath = path.substring(0, dotIndex);
 
         if (parentPath[parentPath.length - 1] !== ']') {
-          var _parent = getIn(result, parentPath)
+          var _parent = getIn(result, parentPath);
 
           if (deepEqual(_parent, empty)) {
-            return deleteInWithCleanUp(result, parentPath)
+            return deleteInWithCleanUp(result, parentPath);
           }
         }
       }
 
-      return result
-    }
+      return result;
+    };
 
-    return deleteInWithCleanUp
-  }
+    return deleteInWithCleanUp;
+  };
 }
 
-export default createDeleteInWithCleanUp
+export default createDeleteInWithCleanUp;
