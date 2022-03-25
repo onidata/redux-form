@@ -48,7 +48,8 @@ var arrayInsert = importedActions.arrayInsert,
     focus = importedActions.focus,
     updateSyncErrorsFormAction = importedActions.updateSyncErrors,
     unregisterFieldFormAction = importedActions.unregisterField,
-    formActions = _objectWithoutPropertiesLoose(importedActions, ["arrayInsert", "arrayMove", "arrayPop", "arrayPush", "arrayRemove", "arrayRemoveAll", "arrayShift", "arraySplice", "arraySwap", "arrayUnshift", "blur", "change", "focus", "updateSyncErrors", "unregisterField"]);
+    registerFieldFormAction = importedActions.registerField,
+    formActions = _objectWithoutPropertiesLoose(importedActions, ["arrayInsert", "arrayMove", "arrayPop", "arrayPush", "arrayRemove", "arrayRemoveAll", "arrayShift", "arraySplice", "arraySwap", "arrayUnshift", "blur", "change", "focus", "updateSyncErrors", "unregisterField", "registerField"]);
 
 var arrayActions = {
   arrayInsert: arrayInsert,
@@ -810,7 +811,8 @@ var createReduxForm = function createReduxForm(structure) {
 
         var boundFormAndIdACs = _mapValues({
           updateSyncErrors: updateSyncErrorsFormAction,
-          unregisterField: unregisterFieldFormAction
+          unregisterField: unregisterFieldFormAction,
+          registerField: registerFieldFormAction
         }, bindFormAndId);
 
         var boundArrayACs = _mapValues(arrayActions, bindForm);

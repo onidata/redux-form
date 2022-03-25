@@ -249,11 +249,12 @@ var initialize = function initialize(form, values, keepDirty, otherMeta) {
   };
 };
 
-var registerField = function registerField(form, name, type) {
+var registerField = function registerField(form, id, name, type) {
   return {
     type: REGISTER_FIELD,
     meta: {
-      form: form
+      form: form,
+      id: id
     },
     payload: {
       name: name,
@@ -295,11 +296,14 @@ var startAsyncValidation = function startAsyncValidation(form, field) {
   };
 };
 
-var startSubmit = function startSubmit(form) {
+var startSubmit = function startSubmit(form, registeredFields) {
   return {
     type: START_SUBMIT,
     meta: {
       form: form
+    },
+    payload: {
+      registeredFields: registeredFields
     }
   };
 };

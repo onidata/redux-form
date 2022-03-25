@@ -383,7 +383,8 @@ function createReducer(structure) {
     result = setIn(result, 'initial', newInitialValues);
     return result;
   }, _behaviors[REGISTER_FIELD] = function (state, _ref19) {
-    var _ref19$payload = _ref19.payload,
+    var id = _ref19.meta.id,
+        _ref19$payload = _ref19.payload,
         name = _ref19$payload.name,
         type = _ref19$payload.type;
     var key = "registeredFields['" + name + "']";
@@ -393,11 +394,20 @@ function createReducer(structure) {
       var count = getIn(field, 'count') + 1;
       field = setIn(field, 'count', count);
     } else {
-      field = fromJS({
-        name: name,
-        type: type,
-        count: 1
-      });
+      if (id) {
+        field = fromJS({
+          name: name,
+          type: type,
+          id: id,
+          count: 1
+        });
+      } else {
+        field = fromJS({
+          name: name,
+          type: type,
+          count: 1
+        });
+      }
     }
 
     return setIn(state, key, field);

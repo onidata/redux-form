@@ -42,7 +42,8 @@ var executeSubmit = function executeSubmit(submit, fields, props) {
       stopSubmit = props.stopSubmit,
       setSubmitFailed = props.setSubmitFailed,
       setSubmitSucceeded = props.setSubmitSucceeded,
-      values = props.values;
+      values = props.values,
+      registeredFields = props.registeredFields;
   fields = makeFieldsArray(fields);
   var result;
 
@@ -71,7 +72,7 @@ var executeSubmit = function executeSubmit(submit, fields, props) {
     }
   } else {
     if (isPromise(result)) {
-      startSubmit();
+      startSubmit(registeredFields);
       return result.then(function (submitResult) {
         stopSubmit();
         setSubmitSucceeded();
