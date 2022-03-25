@@ -24,8 +24,14 @@ function (_Component) {
 
   var _proto = Form.prototype;
 
-  _proto.UNSAFE_componentWillMount = function UNSAFE_componentWillMount() {
+  _proto.componentDidMount = function componentDidMount() {
     this.props._reduxForm.registerInnerOnSubmit(this.props.onSubmit);
+  };
+
+  _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
+    if (this.props.onSubmit !== prevProps.onSubmit) {
+      this.props._reduxForm.registerInnerOnSubmit(this.props.onSubmit);
+    }
   };
 
   _proto.render = function render() {
