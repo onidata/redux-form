@@ -1,1 +1,1 @@
-export var dataKey = 'text';
+export var dataKey = 'text'

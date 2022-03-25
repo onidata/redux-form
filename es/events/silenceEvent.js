@@ -1,13 +1,13 @@
-import isEvent from './isEvent';
+import isEvent from './isEvent'
 
 var silenceEvent = function silenceEvent(event) {
-  var is = isEvent(event);
+  var is = isEvent(event)
 
   if (is) {
-    event.preventDefault();
+    event.preventDefault()
   }
 
-  return is;
-};
+  return is
+}
 
-export default silenceEvent;
+export default silenceEvent

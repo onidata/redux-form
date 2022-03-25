@@ -1,27 +1,27 @@
 var defaultShouldAsyncValidate = function defaultShouldAsyncValidate(_ref) {
   var initialized = _ref.initialized,
-      trigger = _ref.trigger,
-      pristine = _ref.pristine,
-      syncValidationPasses = _ref.syncValidationPasses;
+    trigger = _ref.trigger,
+    pristine = _ref.pristine,
+    syncValidationPasses = _ref.syncValidationPasses
 
   if (!syncValidationPasses) {
-    return false;
+    return false
   }
 
   switch (trigger) {
     case 'blur':
     case 'change':
       // blurring
-      return true;
+      return true
 
     case 'submit':
       // submitting, so only async validate if form is dirty or was never initialized
       // conversely, DON'T async validate if the form is pristine just as it was initialized
-      return !pristine || !initialized;
+      return !pristine || !initialized
 
     default:
-      return false;
+      return false
   }
-};
+}
 
-export default defaultShouldAsyncValidate;
+export default defaultShouldAsyncValidate
